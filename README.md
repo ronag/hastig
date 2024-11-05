@@ -1,5 +1,7 @@
 # hastig - the unfriendly but fast node.js worker
 
+NOTE: THIS IS A FAILED EXPERIMENT FOR NOW. NOT USEABLE IN REAL-LIFE.
+
 | Task name | Throughput average (ops/s) | Throughput median (ops/s) | Latency average (ns) | Latency median (ns) | Samples |
 | --------- | -------------------------- | ------------------------- | -------------------- | ------------------- | ------- |
 | pool      | 1949411 ± 0.05%            | 2178649                   | 874.99 ± 10.37%      | 459.00              | 1147565 |
