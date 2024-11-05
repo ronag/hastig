@@ -90,11 +90,11 @@ export class Worker extends EventEmitter {
       })
       .then(() => {
         if (err) {
-          // TODO (fix): What if handlers throw?
+          // TODO (fix): What if handlers throws?
           this.emit('error', err)
         }
 
-        // TODO (fix): What if handlers throw?
+        // TODO (fix): What if handlers throws?
         this.emit('close')
       })
   }

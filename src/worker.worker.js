@@ -4,6 +4,7 @@ import * as shared from './shared.js'
 const script = await import(workerData.scriptURL)
 const writer = shared.writer(workerData.output)
 const reader = shared.reader(workerData.input, (src) => {
+  // TODO (fix): What if script throws?
   script.default(src, writer.write)
 })
 
