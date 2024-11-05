@@ -40,7 +40,7 @@ hastig.run(
     }
 
     hastig.destroy();
-  },
+  }
 );
 ```
 
