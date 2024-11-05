@@ -35,7 +35,7 @@ hastig.run(
     } else {
       // Buffer deserialize response. 
       const len3 = src.buffer[src.byteOffset++];
-      const str3 = src.buffer.toString(src.byteOffset, len3); // "Hello World"
+      const str3 = src.buffer.toString('ascii', src.byteOffset, len3); // "Hello World"
       console.log(str3);
     }
 
@@ -49,11 +49,11 @@ hastig.run(
 export default function (src, respond) {
   // Buffer deserialize request. 
   const len1 = src.buffer[src.byteOffset++];
-  const str1 = src.buffer.toString(src.byteOffset, len1); // "Hello"
+  const str1 = src.buffer.toString('ascii', src.byteOffset, len1); // "Hello"
   src.byteOffset += len1;
   
   const len2 = src.buffer[src.byteOffset++];
-  const str2 = src.buffer.toString(src.byteOffset, len2); // "World"
+  const str2 = src.buffer.toString('ascii', src.byteOffset, len2); // "World"
   src.byteOffset += len2;
   
   // Respond synchronously!
@@ -66,7 +66,7 @@ export default function (src, respond) {
     (dst, str1, str2) => {
       const str3 = str1 + ' ' + str2;
       // Buffer serialize response.
-      dst.buffer[dst.byteOffset] = buffer.write(str3, dst.byteOffset + 1, str3.length, 'ascii'); // "Hello World" 
+      dst.buffer[dst.byteOffset] = dst.buffer.write(str3, dst.byteOffset + 1, str3.length, 'ascii'); // "Hello World" 
       dst.byteOffset += dst.buffer[dst.byteOffset] + 1;
     },
     // Only 3 args supported!

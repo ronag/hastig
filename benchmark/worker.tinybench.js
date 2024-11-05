@@ -2,12 +2,15 @@ import Piscina from 'piscina'
 import { Worker } from '../index.js'
 import { Bench } from 'tinybench'
 
-const hastig = new Worker(new URL('./add-hastig.worker.js', import.meta.url))
+const hastig = new Worker(new URL('./hastig.worker.js', import.meta.url))
 const piscina = new Piscina({
-  filename: new URL('./add-piscina.worker.js', import.meta.url).href,
+  filename: new URL('./piscina.worker.js', import.meta.url).href,
   maxThreads: 1,
   minThreads: 1
 })
+
+const str1 = 'Hello'
+const str2 = 'World'
 
 const bench = new Bench()
 
@@ -16,20 +19,28 @@ bench.add(
   () =>
     new Promise((resolve) => {
       hastig.run(
-        2,
+        128,
         (dst) => {
-          dst.buffer[dst.byteOffset++] = 1
-          dst.buffer[dst.byteOffset++] = 2
+          dst.buffer[dst.byteOffset] = dst.buffer.write(str1, dst.byteOffset + 1, str1.length, 'ascii')
+          dst.byteOffset += dst.buffer[dst.byteOffset] + 1
+          dst.buffer[dst.byteOffset] = dst.buffer.write(str2, dst.byteOffset + 1, str2.length, 'ascii')
+          dst.byteOffset += dst.buffer[dst.byteOffset] + 1
         },
         (err, src, resolve) => {
-          resolve(err ? Promise.reject(err) : src.buffer[src.byteOffset])
+          if (err) {
+            resolve(Promise.reject(err))
+          } else {
+            const len3 = src.buffer[src.byteOffset++]
+            const str3 = src.buffer.toString('ascii', src.byteOffset, len3)
+            resolve(str3)
+          }
         },
         resolve
       )
     })
 )
 
-bench.add('piscina', () => piscina.run({ a: 1, b: 2 }))
+bench.add('piscina', () => piscina.run({ str1, str2 }))
 
 await bench.run()
 
