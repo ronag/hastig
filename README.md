@@ -34,7 +34,8 @@ hastig.run(
       console.error(err);
     } else {
       // Buffer deserialize response. 
-      const str3 = src.buffer.toString(src.byteOffset + 1, src.buffer[src.byteOffset])); // "Hello World"
+      const len3 = src.buffer[src.byteOffset++];
+      const str3 = src.buffer.toString(src.byteOffset, len3); // "Hello World"
       console.log(str3);
     }
 
