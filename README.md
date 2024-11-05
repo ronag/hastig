@@ -1,4 +1,4 @@
-# veloce - the unfriendly but fast node.js worker
+# hastig - the unfriendly but fast node.js worker
 
 | Task name | Throughput average (ops/s) | Throughput median (ops/s) | Latency average (ns) | Latency median (ns) | Samples |
 | --------- | -------------------------- | ------------------------- | -------------------- | ------------------- | ------- |
@@ -6,14 +6,14 @@
 | piscina   | 65491 ± 0.20%              | 69367                     | 21914.67 ± 8.75%     | 14416.00            | 45632   |
 
 ```js
-import { Worker } from "veloce";
+import { Worker } from "hastig";
 
-const veloce = new Worker(new URL("./add.worker.js", import.meta.url));
+const hastig = new Worker(new URL("./add.worker.js", import.meta.url));
 
 const str1 = "Hello";
 const str2 = "World";
 
-veloce.run(
+hastig.run(
   // Reserve sufficient dst space. Assume 1 byte strings + 1 byte size prefix.
   str1.length + 1 + str2.length + 1,
   // Write synchronously!
@@ -35,7 +35,7 @@ veloce.run(
       console.log(str3);
     }
 
-    veloce.destroy();
+    hastig.destroy();
   },
 );
 ```
