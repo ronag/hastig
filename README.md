@@ -47,10 +47,13 @@ hastig.run(
 // worker.js
 export default function (src, respond) {
   // Buffer deserialize request. 
-  const str1 = src.buffer.toString(src.byteOffset + 1, src.buffer[src.byteOffset]); // "Hello"
-  src.byteOffset += src.buffer[src.byteOffset] + 1;
-  const str2 = src.buffer.toString(src.byteOffset + 1, src.buffer[src.byteOffset]); // "World"
-  src.byteOffset += src.buffer[src.byteOffset] + 1;
+  const len1 = src.buffer[src.byteOffset++];
+  const str1 = src.buffer.toString(src.byteOffset, len1); // "Hello"
+  src.byteOffset += len1;
+  
+  const len2 = src.buffer[src.byteOffset++];
+  const str2 = src.buffer.toString(src.byteOffset, len2); // "World"
+  src.byteOffset += len2;
   
   // Respond synchronously!
   respond(
