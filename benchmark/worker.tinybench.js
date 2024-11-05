@@ -2,7 +2,7 @@ import Piscina from 'piscina'
 import { Worker } from '../index.js'
 import { Bench } from 'tinybench'
 
-const veloce = new Worker(new URL('./add-veloce.worker.js', import.meta.url))
+const hastig = new Worker(new URL('./add-hastig.worker.js', import.meta.url))
 const piscina = new Piscina({
   filename: new URL('./add-piscina.worker.js', import.meta.url).href,
 })
@@ -10,10 +10,10 @@ const piscina = new Piscina({
 const bench = new Bench()
 
 bench.add(
-  'veloce',
+  'hastig',
   () =>
     new Promise((resolve) => {
-      veloce.run(
+      hastig.run(
         2,
         (dst) => {
           dst.buffer[dst.byteOffset++] = 1
@@ -33,4 +33,4 @@ await bench.run()
 
 console.table(bench.table())
 
-veloce.destroy()
+hastig.destroy()

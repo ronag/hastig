@@ -1,14 +1,14 @@
 {
-  "name": "veloce",
-  "version": "0.0.0",
+  "name": "hastig",
+  "version": "0.0.1",
   "main": "pool.js",
   "type": "module",
   "bugs": {
-    "url": "https://github.com/ronag/veloce/issues"
+    "url": "https://github.com/ronag/hastig/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ronag/veloce.git"
+    "url": "git+https://github.com/ronag/hastig.git"
   },
   "license": "MIT",
   "contributors": [

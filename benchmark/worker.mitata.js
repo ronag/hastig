@@ -2,7 +2,7 @@ import Piscina from 'piscina'
 import { Worker } from '../index.js'
 import { bench, run } from 'mitata'
 
-const veloce = new Worker(new URL('./add-veloce.worker.js', import.meta.url))
+const hastig = new Worker(new URL('./add-hastig.worker.js', import.meta.url))
 const piscina = new Piscina({
   filename: new URL('./add-piscina.worker.js', import.meta.url).href,
   maxThreads: 1,
@@ -10,10 +10,10 @@ const piscina = new Piscina({
 })
 
 bench(
-  'veloce',
+  'hastig',
   () =>
     new Promise((resolve) => {
-      veloce.run(
+      hastig.run(
         2,
         (dst) => {
           dst.buffer[dst.byteOffset++] = 1
@@ -31,4 +31,4 @@ bench('piscina', () => piscina.run({ a: 1, b: 2 }))
 
 await run()
 
-veloce.destroy()
+hastig.destroy()
