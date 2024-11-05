@@ -1,6 +1,6 @@
 {
   "name": "hastig",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "pool.js",
   "type": "module",
   "bugs": {
