@@ -8,9 +8,10 @@
 ## Example
 
 ```js
+// index.js
 import { Worker } from "hastig";
 
-const hastig = new Worker(new URL("./add.worker.js", import.meta.url));
+const hastig = new Worker(new URL("./worker.js", import.meta.url));
 
 const str1 = "Hello";
 const str2 = "World";
@@ -43,6 +44,7 @@ hastig.run(
 ```
 
 ```js
+// worker.js
 export default function (src, respond) {
   // Buffer deserialize request. 
   const str1 = src.buffer.toString(src.byteOffset + 1, src.buffer[src.byteOffset]); // "Hello"
