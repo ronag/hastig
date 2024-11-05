@@ -24,7 +24,7 @@ export function reader ({ sharedState, sharedBuffer }, onRead) {
 
   let destroyed = false
 
-  async function read (next, arg1, arg2, arg3) {
+  async function read () {
     let yieldCount = 0
     while (true) {
       writePos = Atomics.load(state, WRITE_INDEX)
@@ -47,7 +47,7 @@ export function reader ({ sharedState, sharedBuffer }, onRead) {
           data.byteLength = dataLen
 
           // TODO (fix): What if next throws?
-          next(data, arg1, arg2, arg3)
+          onRead(data)
         }
 
         Atomics.store(state, READ_INDEX, readPos)
@@ -78,7 +78,7 @@ export function reader ({ sharedState, sharedBuffer }, onRead) {
     destroyed = true
   }
 
-  read(onRead)
+  read()
 
   return { destroy }
 }
