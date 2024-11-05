@@ -5,6 +5,8 @@ import { Bench } from 'tinybench'
 const hastig = new Worker(new URL('./add-hastig.worker.js', import.meta.url))
 const piscina = new Piscina({
   filename: new URL('./add-piscina.worker.js', import.meta.url).href,
+  maxThreads: 1,
+  minThreads: 1
 })
 
 const bench = new Bench()
