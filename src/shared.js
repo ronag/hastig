@@ -148,10 +148,10 @@ export function writer ({ sharedState, sharedBuffer }) {
 
     readPos = Atomics.load(state, READ_INDEX) | 0
 
-    const notify = state[WRITE_INDEX] === readPos
+    const needsNotify = state[WRITE_INDEX] === readPos
     Atomics.store(state, WRITE_INDEX, writePos)
 
-    if (notify) {
+    if (needsNotify) {
       Atomics.notify(state, WRITE_INDEX)
     }
   }
