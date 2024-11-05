@@ -19,21 +19,21 @@ export function reader ({ sharedState, sharedBuffer }, onRead) {
   const view = new DataView(sharedBuffer)
   const data = { buffer, view, byteOffset: 0, byteLength: 0 }
 
-  let readPos = Atomics.load(state, READ_INDEX) | 0
-  let writePos = Atomics.load(state, WRITE_INDEX) | 0
+  let readPos = Atomics.load(state, READ_INDEX)
+  let writePos = Atomics.load(state, WRITE_INDEX)
 
   let destroyed = false
 
   async function read (next, arg1, arg2, arg3) {
     let yieldCount = 0
     while (true) {
-      writePos = Atomics.load(state, WRITE_INDEX) | 0
+      writePos = Atomics.load(state, WRITE_INDEX)
 
       if (readPos !== writePos) {
         yieldCount = 0
 
         const dataPos = readPos + 4
-        const dataLen = view.getInt32(dataPos - 4, true) | 0
+        const dataLen = view.getInt32(dataPos - 4, true)
 
         if (dataLen === -1) {
           readPos = 0
@@ -90,8 +90,8 @@ export function writer ({ sharedState, sharedBuffer }) {
   const view = new DataView(sharedBuffer)
   const data = { buffer, view, byteOffset: 0, byteLength: 0 }
 
-  let readPos = Atomics.load(state, READ_INDEX) | 0
-  let writePos = Atomics.load(state, WRITE_INDEX) | 0
+  let readPos = Atomics.load(state, READ_INDEX)
+  let writePos = Atomics.load(state, WRITE_INDEX)
 
   let destroyed = false
 
@@ -101,7 +101,7 @@ export function writer ({ sharedState, sharedBuffer }) {
     assert(required >= 0)
     assert(required <= size)
 
-    readPos = Atomics.load(state, READ_INDEX) | 0
+    readPos = Atomics.load(state, READ_INDEX)
 
     if (writePos >= readPos) {
       // 0----RxxxxxxW---S
@@ -146,7 +146,7 @@ export function writer ({ sharedState, sharedBuffer }) {
     assert(writePos + 4 <= size) // must have room for next header also
     assert(writePos !== readPos)
 
-    readPos = Atomics.load(state, READ_INDEX) | 0
+    readPos = Atomics.load(state, READ_INDEX)
 
     const needsNotify = state[WRITE_INDEX] === readPos
     Atomics.store(state, WRITE_INDEX, writePos)
