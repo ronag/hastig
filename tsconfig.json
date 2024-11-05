@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es2024"],
+    "module": "NodeNext",
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "useUnknownInCatchVariables": false,
+    "noEmit": true
+  },
+  "include": ["src/**/*"]
+}
